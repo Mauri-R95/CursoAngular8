@@ -20,7 +20,9 @@ export class CorreoComponent implements OnInit {
 
   ngOnInit(): void {
     const datosRecibidos = this.route.snapshot.paramMap.get("correo");
-    this.correo = JSON.parse(datosRecibidos);
+    if(datosRecibidos){
+      this.correo = JSON.parse(datosRecibidos);
+    }
   }
 
 }
