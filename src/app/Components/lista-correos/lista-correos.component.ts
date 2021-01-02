@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-correos',
@@ -11,7 +12,7 @@ export class ListaCorreosComponent implements OnInit {
   responder: boolean;
   correoAResponder: any;
 
-  constructor() {
+  constructor( private router: Router) {
     const correo1 = {
       titulo: "Titulo del 1",
       cuerpo: `Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email
@@ -64,5 +65,9 @@ export class ListaCorreosComponent implements OnInit {
   accionRespuestaRapida(correo) {
     correo.responder = false;
     console.log("Respuesta Recibida");
+  }
+
+  verDetalle(correo){
+    this.router.navigate(['/mail', {correo: JSON.stringify(correo)}]);
   }
 }
