@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AvisosService } from 'src/app/Services/avisos.service';
 
 @Component({
   selector: 'app-nuevo-correo',
@@ -13,7 +14,7 @@ export class NuevoCorreoComponent implements OnInit {
   @Input() correo: any;
   @Output() accionRealizada : EventEmitter<any> = new EventEmitter();
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private servicioAvisos: AvisosService) { }
 
   ngOnInit() {
     this.nuevoCorreo = this.formBuilder.group({
@@ -43,14 +44,20 @@ export class NuevoCorreoComponent implements OnInit {
     let correo = this.nuevoCorreo.value;
     correo.leido = false;
     correo.emisor= 'correoEmisor1@openWebinar.inv';
-    alert("Correo Enviado \nEliminamos el formulario");
+    //alert("Correo Enviado \nEliminamos el formulario");
     this.onReset();
+    this.servicioAvisos.showMenssage(`Correo Enviado  a ${correo.emisor}`);
   }
 
   onReset(){
     this.submitted = false;
     this.nuevoCorreo.reset();
     this.accionRealizada.emit();
+  }
+
+  cancel(){
+    this.onReset();
+    this.servicioAvisos.showMenssage("Envio Cancelado");
   }
 
 }
